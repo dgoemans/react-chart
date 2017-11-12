@@ -1,0 +1,26 @@
+.react-chart {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.react-chart-tooltip {
+    pointer-events: none;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: #dddddd;
+    text-align: center;
+    min-width: 120px;
+    padding: 5px;
+    border-radius: 6px;
+ 
+    /* Position the tooltip text - see examples below! */
+    position: absolute;
+    z-index: 1;
+    transform: translate(-50%, -100%);
+}
+
+.hidden {
+    visibility: hidden;
+}
+
+.visible { 
+    visibility: visible;
+}
