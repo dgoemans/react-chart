@@ -12,11 +12,11 @@ class App extends React.Component {
                 <PieChart 
                     data={
                     [
-                        {name: "USA", amount: 0.4},
-                        {name:"Netherlands", amount: 0.25},
-                        {name:"South Africa", amount: 0.10},
-                        {name:"Maldives", amount: 0.15},
-                        {name:"Belgium", amount: 0.15}
+                        {name: "USA", amount: 0.4254},
+                        {name:"Netherlands", amount: 0.2322},
+                        {name:"South Africa", amount: 0.1716},
+                        {name:"Maldives", amount: 0.121},
+                        {name:"Belgium", amount: 0.0498}
                     ]}
                     legend={true}
                     size={400}

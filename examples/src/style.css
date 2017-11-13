@@ -30,9 +30,9 @@ body {
 /* override library settings */
 .react-chart {
     padding: 15px;
-    flex-direction: column;
+    flex-direction: row;
 }
 
 .react-chart-legend {
-    flex-direction: row;
+    flex-direction: column;
 }

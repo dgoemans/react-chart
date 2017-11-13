@@ -6,21 +6,25 @@
     pointer-events: none;
     background-color: rgba(0, 0, 0, 0.8);
     color: #dddddd;
-    text-align: center;
     min-width: 120px;
-    padding: 5px;
-    border-radius: 6px;
- 
-    /* Position the tooltip text - see examples below! */
+    padding: 0.5em 0.6em;
+    border-radius: 0.5em;
+    font-size: 0.9em;
     position: absolute;
     z-index: 1;
     transform: translate(-50%, -100%);
 }
 
+.react-chart-tooltip span {
+    margin: auto;
+}
+
 .hidden {
     visibility: hidden;
+    display: none !important;
 }
 
 .visible { 
     visibility: visible;
+    display: inherit !important;
 }
