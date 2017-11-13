@@ -1,5 +1,5 @@
 {
-  "name": "react-chart",
+  "name": "react-chart-lib",
   "version": "1.0.0",
   "description": "A simple charting component for React",
   "main": "index.js",
