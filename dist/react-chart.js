@@ -1082,7 +1082,7 @@ var singleton = null;
 var	singletonCounter = 0;
 var	stylesInsertedAtTop = [];
 
-var	fixUrls = __webpack_require__(32);
+var	fixUrls = __webpack_require__(33);
 
 module.exports = function(list, options) {
 	if (typeof DEBUG !== "undefined" && DEBUG) {
@@ -1407,15 +1407,20 @@ function updateLink (link, options, obj) {
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.PieChart = undefined;
+exports.BarChart = exports.PieChart = undefined;
 
 var _PieChart = __webpack_require__(17);
 
 var _PieChart2 = _interopRequireDefault(_PieChart);
 
+var _BarChart = __webpack_require__(38);
+
+var _BarChart2 = _interopRequireDefault(_BarChart);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.PieChart = _PieChart2.default;
+exports.BarChart = _BarChart2.default;
 
 /***/ }),
 /* 17 */
@@ -1436,9 +1441,19 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactDom = __webpack_require__(21);
 
-__webpack_require__(30);
+var _Constants = __webpack_require__(36);
 
-__webpack_require__(33);
+var Constants = _interopRequireWildcard(_Constants);
+
+var _BaseChart2 = __webpack_require__(37);
+
+var _BaseChart3 = _interopRequireDefault(_BaseChart2);
+
+__webpack_require__(31);
+
+__webpack_require__(34);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -1448,8 +1463,8 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var PieChart = function (_Component) {
-    _inherits(PieChart, _Component);
+var PieChart = function (_BaseChart) {
+    _inherits(PieChart, _BaseChart);
 
     function PieChart() {
         _classCallCheck(this, PieChart);
@@ -1458,17 +1473,6 @@ var PieChart = function (_Component) {
     }
 
     _createClass(PieChart, [{
-        key: 'componentWillMount',
-        value: function componentWillMount() {
-            this.colors = ['#3982D2', '#899EE8', '#8B7AEB', '#935BCD', '#BB6BCE', '#CF4384', '#EA3A22', '#EE7B28', '#F3AF2F', '#FBE739', '#76CE38', '#4DA338', '#61C478', '#65D1AE', '#93DADC', '#75B6D2', '#A6D9FD'];
-
-            this.setState({
-                tooltip: '',
-                mouseX: 0,
-                mouseY: 0
-            });
-        }
-    }, {
         key: 'render',
         value: function render() {
             var _this2 = this;
@@ -1487,8 +1491,8 @@ var PieChart = function (_Component) {
             var hoveredArc = null;
 
             data.forEach(function (dataSet, index) {
-                var colorIndex = Math.floor(index / data.length * _this2.colors.length);
-                var color = dataSet.color || _this2.colors[colorIndex];
+                var colorIndex = Math.floor(index / data.length * Constants.colors.length);
+                var color = dataSet.color || Constants.colors[colorIndex];
                 var computed = _this2._getArc(dataSet.name, dataSet.amount, startAngle, center, radius, color);
                 arcs.push(computed);
 
@@ -1537,19 +1541,9 @@ var PieChart = function (_Component) {
             );
         }
     }, {
-        key: '_getLegend',
-        value: function _getLegend(name, percent, color) {
-
-            return _react2.default.createElement(
-                'div',
-                { key: name, className: 'react-chart-legend-row' },
-                _react2.default.createElement('div', { className: 'react-chart-legend-box', style: { backgroundColor: color } }),
-                _react2.default.createElement(
-                    'span',
-                    { className: 'react-chart-legend-label' },
-                    name
-                )
-            );
+        key: '_getAmountString',
+        value: function _getAmountString(amount) {
+            return Math.round(amount * 10000) / 100 + '%';
         }
     }, {
         key: '_getArc',
@@ -1582,30 +1576,10 @@ var PieChart = function (_Component) {
                 strokeWidth: strokeWidth,
                 strokeLinejoin: 'round' });
         }
-    }, {
-        key: '_setTooltip',
-        value: function _setTooltip(event) {
-            var name = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
-            var percent = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
-
-
-            var percentText = '';
-
-            if (percent !== null) {
-                percentText = ' (' + Math.round(percent * 10000) / 100 + '%)';
-            }
-
-            this.setState({
-                hovered: name,
-                tooltip: name + percentText,
-                mouseX: event.clientX,
-                mouseY: event.clientY
-            });
-        }
     }]);
 
     return PieChart;
-}(_react.Component);
+}(_BaseChart3.default);
 
 PieChart.defaultProps = {
     legend: true,
@@ -18873,13 +18847,14 @@ function camelize(string) {
 module.exports = camelize;
 
 /***/ }),
-/* 30 */
+/* 30 */,
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(31);
+var content = __webpack_require__(32);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // Prepare cssTransformation
 var transform;
@@ -18904,7 +18879,7 @@ if(false) {
 }
 
 /***/ }),
-/* 31 */
+/* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(14)(undefined);
@@ -18912,13 +18887,13 @@ exports = module.exports = __webpack_require__(14)(undefined);
 
 
 // module
-exports.push([module.i, ".react-chart {\r\n    font-family: Arial, Helvetica, sans-serif;\r\n}\r\n\r\n.react-chart-tooltip {\r\n    pointer-events: none;\r\n    background-color: rgba(0, 0, 0, 0.8);\r\n    color: #dddddd;\r\n    min-width: 120px;\r\n    padding: 0.5em 0.6em;\r\n    border-radius: 0.5em;\r\n    font-size: 0.9em;\r\n    position: absolute;\r\n    z-index: 1;\r\n    transform: translate(-50%, -100%);\r\n}\r\n\r\n.react-chart-tooltip span {\r\n    margin: auto;\r\n}\r\n\r\n.hidden {\r\n    visibility: hidden;\r\n    display: none !important;\r\n}\r\n\r\n.visible { \r\n    visibility: visible;\r\n    display: inherit !important;\r\n}\r\n", ""]);
+exports.push([module.i, ".react-chart {\r\n    font-family: Arial, Helvetica, sans-serif;\r\n    display: flex;\r\n    flex-direction: row;\r\n}\r\n\r\n.react-chart-tooltip {\r\n    pointer-events: none;\r\n    background-color: rgba(0, 0, 0, 0.8);\r\n    color: #dddddd;\r\n    min-width: 120px;\r\n    padding: 0.5em 0.6em;\r\n    border-radius: 0.5em;\r\n    font-size: 0.9em;\r\n    position: absolute;\r\n    z-index: 1;\r\n    transform: translate(-50%, -100%);\r\n}\r\n\r\n.react-chart-tooltip span {\r\n    margin: auto;\r\n}\r\n\r\n.hidden {\r\n    visibility: hidden;\r\n    display: none !important;\r\n}\r\n\r\n.visible { \r\n    visibility: visible;\r\n    display: inherit !important;\r\n}\r\n\r\n.react-chart-legend {\r\n    display: flex;\r\n    flex-direction: column;\r\n    padding: 0.5em;\r\n}\r\n\r\n.selected {\r\n    color: #777777;\r\n}\r\n\r\n.react-chart-legend-row {\r\n    display: flex;\r\n    flex-direction: row;\r\n    padding: 0.3em;\r\n}\r\n\r\n.react-chart-legend-box {\r\n    width: 1em;\r\n    height: 1em;\r\n}\r\n\r\n.react-chart-legend-label {\r\n    margin-left: 1em;\r\n}\r\n", ""]);
 
 // exports
 
 
 /***/ }),
-/* 32 */
+/* 33 */
 /***/ (function(module, exports) {
 
 
@@ -19013,13 +18988,13 @@ module.exports = function (css) {
 
 
 /***/ }),
-/* 33 */
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(34);
+var content = __webpack_require__(35);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // Prepare cssTransformation
 var transform;
@@ -19044,7 +19019,7 @@ if(false) {
 }
 
 /***/ }),
-/* 34 */
+/* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(14)(undefined);
@@ -19052,7 +19027,293 @@ exports = module.exports = __webpack_require__(14)(undefined);
 
 
 // module
-exports.push([module.i, ".react-chart {\r\n    display: flex;\r\n    flex-direction: row;\r\n}\r\n\r\n.react-chart-legend {\r\n    display: flex;\r\n    flex-direction: column;\r\n    padding: 0.5em;\r\n}\r\n\r\n.react-chart-legend-row {\r\n    display: flex;\r\n    flex-direction: row;\r\n    padding: 0.3em;\r\n}\r\n\r\n.react-chart-legend-box {\r\n    width: 1em;\r\n    height: 1em;\r\n}\r\n\r\n.react-chart-legend-label {\r\n    margin-left: 1em;\r\n}\r\n", ""]);
+exports.push([module.i, "", ""]);
+
+// exports
+
+
+/***/ }),
+/* 36 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+var colors = exports.colors = ['#3982D2', '#899EE8', '#8B7AEB', '#935BCD', '#BB6BCE', '#CF4384', '#EA3A22', '#EE7B28', '#F3AF2F', '#FBE739', '#76CE38', '#4DA338', '#61C478', '#65D1AE', '#93DADC', '#75B6D2', '#A6D9FD'];
+
+/***/ }),
+/* 37 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(4);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactDom = __webpack_require__(21);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var BaseChart = function (_Component) {
+    _inherits(BaseChart, _Component);
+
+    function BaseChart() {
+        _classCallCheck(this, BaseChart);
+
+        return _possibleConstructorReturn(this, (BaseChart.__proto__ || Object.getPrototypeOf(BaseChart)).apply(this, arguments));
+    }
+
+    _createClass(BaseChart, [{
+        key: 'componentWillMount',
+        value: function componentWillMount() {
+            this.setState({
+                tooltip: '',
+                mouseX: 0,
+                mouseY: 0
+            });
+        }
+    }, {
+        key: '_getAmountString',
+        value: function _getAmountString(amount) {
+            return amount.toFixed(2);
+        }
+    }, {
+        key: '_setTooltip',
+        value: function _setTooltip(event) {
+            var name = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
+            var amount = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
+
+
+            var percentText = '';
+
+            if (amount !== null) {
+                percentText = ' (' + this._getAmountString(amount) + ')';
+            }
+
+            this.setState({
+                hovered: name,
+                tooltip: name + percentText,
+                mouseX: event.clientX,
+                mouseY: event.clientY
+            });
+        }
+    }, {
+        key: '_getLegend',
+        value: function _getLegend(name, percent, color) {
+
+            return _react2.default.createElement(
+                'div',
+                { key: name, className: 'react-chart-legend-row' + (this.state.hovered === name ? '  selected' : '') },
+                _react2.default.createElement('div', { className: 'react-chart-legend-box', style: { backgroundColor: color } }),
+                _react2.default.createElement(
+                    'span',
+                    { className: 'react-chart-legend-label' },
+                    name
+                )
+            );
+        }
+    }]);
+
+    return BaseChart;
+}(_react.Component);
+
+;
+
+exports.default = BaseChart;
+
+/***/ }),
+/* 38 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(4);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactDom = __webpack_require__(21);
+
+var _Constants = __webpack_require__(36);
+
+var Constants = _interopRequireWildcard(_Constants);
+
+var _BaseChart2 = __webpack_require__(37);
+
+var _BaseChart3 = _interopRequireDefault(_BaseChart2);
+
+__webpack_require__(31);
+
+__webpack_require__(39);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var BarChart = function (_BaseChart) {
+    _inherits(BarChart, _BaseChart);
+
+    function BarChart() {
+        _classCallCheck(this, BarChart);
+
+        return _possibleConstructorReturn(this, (BarChart.__proto__ || Object.getPrototypeOf(BarChart)).apply(this, arguments));
+    }
+
+    _createClass(BarChart, [{
+        key: 'render',
+        value: function render() {
+            var _this2 = this;
+
+            var data = this.props.data;
+
+            var height = this.props.height;
+            var bars = [];
+            var legend = [];
+
+            var hoveredBar = null;
+
+            var maxAmount = Math.max.apply(Math, data.map(function (data) {
+                return data.amount;
+            }));
+
+            data.forEach(function (dataSet, index) {
+                var colorIndex = Math.floor(index / data.length * Constants.colors.length);
+                var color = dataSet.color || Constants.colors[colorIndex];
+
+                var barHeight = dataSet.amount / maxAmount * height;
+                var computed = _this2._getBar(dataSet.name, dataSet.amount, barHeight, color);
+                bars.push(computed);
+
+                if (dataSet.name === _this2.state.hovered) {
+                    hoveredBar = computed;
+                }
+
+                var legendItem = _this2._getLegend(dataSet.name, dataSet.amount, color);
+
+                legend.push(legendItem);
+            });
+
+            return _react2.default.createElement(
+                'div',
+                { className: 'react-chart' },
+                _react2.default.createElement(
+                    'div',
+                    { className: 'react-chart-bars' },
+                    bars
+                ),
+                _react2.default.createElement(
+                    'div',
+                    { className: 'react-chart-tooltip ' + (this.state.hovered ? 'visible' : 'hidden'),
+                        style: { top: this.state.mouseY, left: this.state.mouseX } },
+                    _react2.default.createElement(
+                        'span',
+                        null,
+                        this.state.tooltip
+                    )
+                ),
+                _react2.default.createElement(
+                    'div',
+                    { className: 'react-chart-legend ' + (this.props.legend ? 'visible' : 'hidden') },
+                    legend
+                )
+            );
+        }
+    }, {
+        key: '_getBar',
+        value: function _getBar(name, amount, height, color) {
+            var _this3 = this;
+
+            return _react2.default.createElement('div', { key: name,
+                style: { backgroundColor: color, height: height },
+                className: 'react-chart-bar',
+                onMouseOver: function onMouseOver(event) {
+                    return _this3._setTooltip(event, name, amount);
+                },
+                onMouseOut: function onMouseOut(event) {
+                    return _this3._setTooltip(event, '');
+                },
+                onMouseMove: function onMouseMove(event) {
+                    return _this3._setTooltip(event, name, amount);
+                }
+            });
+        }
+    }]);
+
+    return BarChart;
+}(_BaseChart3.default);
+
+exports.default = BarChart;
+
+/***/ }),
+/* 39 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(40);
+if(typeof content === 'string') content = [[module.i, content, '']];
+// Prepare cssTransformation
+var transform;
+
+var options = {"hmr":true}
+options.transform = transform
+// add the styles to the DOM
+var update = __webpack_require__(15)(content, options);
+if(content.locals) module.exports = content.locals;
+// Hot Module Replacement
+if(false) {
+	// When the styles change, update the <style> tags
+	if(!content.locals) {
+		module.hot.accept("!!../../node_modules/css-loader/index.js!./BarChart.css", function() {
+			var newContent = require("!!../../node_modules/css-loader/index.js!./BarChart.css");
+			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+			update(newContent);
+		});
+	}
+	// When the module is disposed, remove the <style> tags
+	module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 40 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(14)(undefined);
+// imports
+
+
+// module
+exports.push([module.i, ".react-chart-bars {\r\n    display: flex;\r\n    align-items: baseline;\r\n}\r\n\r\n.react-chart-bar {\r\n    width: 40px;\r\n    margin-right: 30px;\r\n    float: left;\r\n    box-sizing: border-box;\r\n}\r\n\r\n.react-chart-bar:hover {\r\n    border: 2px solid #ccc;\r\n}", ""]);
 
 // exports
 

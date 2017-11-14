@@ -1,5 +1,7 @@
 .react-chart {
     font-family: Arial, Helvetica, sans-serif;
+    display: flex;
+    flex-direction: row;
 }
 
 .react-chart-tooltip {
@@ -27,4 +29,29 @@
 .visible { 
     visibility: visible;
     display: inherit !important;
+}
+
+.react-chart-legend {
+    display: flex;
+    flex-direction: column;
+    padding: 0.5em;
+}
+
+.selected {
+    color: #777777;
+}
+
+.react-chart-legend-row {
+    display: flex;
+    flex-direction: row;
+    padding: 0.3em;
+}
+
+.react-chart-legend-box {
+    width: 1em;
+    height: 1em;
+}
+
+.react-chart-legend-label {
+    margin-left: 1em;
 }

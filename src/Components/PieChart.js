@@ -1,37 +1,12 @@
 import React, { Component } from 'react';
 import {render} from 'react-dom';
+import * as Constants from './Constants'
+import BaseChart from './BaseChart'
+
 import './Common.css';
 import './PieChart.css';
 
-class PieChart extends Component {
-
-    componentWillMount() {
-        this.colors = [
-            '#3982D2',
-            '#899EE8',
-            '#8B7AEB',
-            '#935BCD',
-            '#BB6BCE',
-            '#CF4384',
-            '#EA3A22',
-            '#EE7B28',
-            '#F3AF2F',
-            '#FBE739',
-            '#76CE38',
-            '#4DA338',
-            '#61C478',
-            '#65D1AE',
-            '#93DADC',
-            '#75B6D2',
-            '#A6D9FD'
-        ];
-
-        this.setState({
-            tooltip: '',
-            mouseX: 0,
-            mouseY: 0
-        });
-    }
+class PieChart extends BaseChart {
 
     render() {
         let data = this.props.data;
@@ -48,8 +23,8 @@ class PieChart extends Component {
         let hoveredArc = null;
 
         data.forEach((dataSet, index) => {
-            let colorIndex = Math.floor( (index/data.length) * this.colors.length);
-            let color = dataSet.color || this.colors[colorIndex];
+            let colorIndex = Math.floor( (index/data.length) * Constants.colors.length);
+            let color = dataSet.color || Constants.colors[colorIndex];
             let computed = this._getArc(dataSet.name, dataSet.amount, startAngle, center, radius, color);
             arcs.push(computed);
 
@@ -86,12 +61,8 @@ class PieChart extends Component {
         </div>);
     }
 
-    _getLegend(name, percent, color) {
-
-        return (<div key={name} className='react-chart-legend-row'>
-                <div className='react-chart-legend-box' style={{backgroundColor: color}}></div>
-                <span className='react-chart-legend-label'>{name}</span>
-            </div>);
+    _getAmountString(amount) {
+        return Math.round(amount*10000)/100 + '%';
     }
 
     _getArc(dataSetName, percent, startAngle, center, radius, arcColor) {
@@ -117,22 +88,6 @@ class PieChart extends Component {
                 strokeWidth={strokeWidth}
                 strokeLinejoin='round'>
             </path>);
-    }
-
-    _setTooltip(event, name = '', percent = null) {
-
-        let percentText = '';
-
-        if(percent !== null) {
-            percentText = ' (' + Math.round(percent*10000)/100 + '%)';
-        }
-
-        this.setState({
-            hovered: name,
-            tooltip: name + percentText,
-            mouseX: event.clientX,
-            mouseY: event.clientY
-        });
     }
 }
 

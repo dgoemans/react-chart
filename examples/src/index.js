@@ -1,6 +1,6 @@
 import React from 'react';
 import {render} from 'react-dom';
-import { PieChart } from '../../dist/react-chart';
+import { PieChart, BarChart } from '../../dist/react-chart';
 import './style.css';
 
 class App extends React.Component {
@@ -20,6 +20,19 @@ class App extends React.Component {
                     ]}
                     legend={true}
                     size={400}
+                />
+                <span className='chart-title'>Bar Chart</span>
+                <BarChart 
+                    data={
+                    [
+                        {name: "USA", amount: 101},
+                        {name:"Netherlands", amount: 56.5},
+                        {name:"South Africa", amount: 23.2555},
+                        {name:"Maldives", amount: 3},
+                        {name:"Belgium", amount: 45.76}
+                    ]}
+                    legend={true}
+                    height={200}
                 />
             </div>
         </div>);
