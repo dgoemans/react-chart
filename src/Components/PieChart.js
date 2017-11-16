@@ -34,7 +34,7 @@ class PieChart extends BaseChart {
 
             startAngle += dataSet.amount * Math.PI*2;
 
-            let legendItem = this._getLegend(dataSet.name, dataSet.amount, color);
+            let legendItem = this._getLegend(dataSet.name, color);
 
             legend.push(legendItem);
         });
@@ -48,17 +48,17 @@ class PieChart extends BaseChart {
         })
 
         return (<div className='react-chart'>
-            <svg width={size} height={size} xmlns="http://www.w3.org/2000/svg">
-                {arcs}
-            </svg>
-            <div className={'react-chart-tooltip ' + (this.state.hovered ? 'visible' : 'hidden')} 
-                style={{top: this.state.mouseY, left: this.state.mouseX }}>
-                <span>{this.state.tooltip}</span>
-            </div>
-            <div className={'react-chart-legend ' + (this.props.legend ? 'visible' : 'hidden')}>
-                {legend}
-            </div>
-        </div>);
+                <svg width={size} height={size} xmlns="http://www.w3.org/2000/svg">
+                    {arcs}
+                </svg>
+                <div className={'react-chart-tooltip ' + (this.state.hovered ? 'visible' : 'hidden')} 
+                    style={{top: this.state.mouseY, left: this.state.mouseX }}>
+                    <span>{this.state.tooltip}</span>
+                </div>
+                <div className={'react-chart-legend ' + (this.props.legend ? 'visible' : 'hidden')}>
+                    {legend}
+                </div>
+            </div>);
     }
 
     _getAmountString(amount) {

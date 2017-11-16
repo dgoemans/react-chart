@@ -31,7 +31,7 @@ class BaseChart extends Component {
         });
     }
 
-    _getLegend(name, percent, color) {
+    _getLegend(name, color) {
         
         return (<div key={name} className={'react-chart-legend-row' + ((this.state.hovered === name) ? '  selected' : '') }>
                 <div className='react-chart-legend-box' style={{backgroundColor: color}}></div>
