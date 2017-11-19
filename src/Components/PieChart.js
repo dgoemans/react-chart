@@ -75,10 +75,25 @@ class PieChart extends BaseChart {
         let endAngle = startAngle + angle;
         let x2 = Math.cos(endAngle)*radiusLessStroke + center;
         let y2 = Math.sin(endAngle)*radiusLessStroke + center;
+
+        let closing = `L ${center} ${center} Z`;
+
+        let large = (endAngle - startAngle) > Math.PI;
+
+        if(this.props.donut) {
+            let innerRadius = radiusLessStroke*this.props.donutThickness;
+            let xInner = Math.cos(startAngle)*innerRadius + center;
+            let yInner = Math.sin(startAngle)*innerRadius + center;
+            let x2Inner = Math.cos(endAngle)*innerRadius + center;
+            let y2Inner = Math.sin(endAngle)*innerRadius + center;
+
+            closing = `L ${x2Inner} ${y2Inner}
+                A ${innerRadius} ${innerRadius}, 0, ${large?1:0}, 0, ${xInner} ${yInner} Z`;
+        }
         
         return (<path key={dataSetName} d={`M ${x} ${y}
-                A ${radiusLessStroke} ${radiusLessStroke}, 0, 0, 1, ${x2} ${y2}
-                L ${center} ${center} Z`}
+                A ${radiusLessStroke} ${radiusLessStroke}, 0, ${large?1:0}, 1, ${x2} ${y2}
+                ${closing}`}
                 fill={arcColor}
                 onMouseOver={(event) => this._setTooltip(event, dataSetName, percent)}
                 onMouseOut={(event) => this._setTooltip(event, '')}
@@ -94,7 +109,9 @@ class PieChart extends BaseChart {
 PieChart.defaultProps = {
     legend: true,
     hoverColor: '#ccc',
-    strokeColor: '#ffffff'
+    strokeColor: '#ffffff',
+    donut: true,
+    donutThickness: 0.6
 }
 
 export default PieChart;

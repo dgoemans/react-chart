@@ -21,17 +21,21 @@ Supports the following chart(s):
     ]}
     legend={true}
     size={400}
+    donut={true}
+    donutThickness={0.6}
 />
 ```
 
 ### Props:
 |Name          |Description         |
 |--------------|--------------------|
-|`data`        |The data set, consisting of `name`, `amount` (value between 0 and 1) and an optional `color` (required)|
-|`size`        |The size of the chart in pixels (required)|
-|`legend`      |Whether or not to show the legend (optional)|
-|`strokeColor` |The outline of a non-hovered segment (optional)|
-|`hoverColor`  |The outline of a hovered segment (optional)|
+|`data`          |The data set, consisting of `name`, `amount` (value between 0 and 1) and an optional `color` (required)|
+|`size`          |The size of the chart in pixels (required)|
+|`legend`        |Whether or not to show the legend (optional)|
+|`strokeColor`   |The outline of a non-hovered segment (optional)|
+|`hoverColor`    |The outline of a hovered segment (optional)|
+|`donut`         |Show as a donut chart (optional)|
+|`donutThickness`|Thickness of the donut chart as a percentage of the radius (optional)|
 
 
 ## Bar Chart
