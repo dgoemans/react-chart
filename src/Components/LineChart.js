@@ -14,7 +14,7 @@ class LineChart extends BaseChart {
         let data = this.props.data;
         let height = this.props.height - strokeWidth;
         let legend = [];
-        let lines = [];
+        let graphs = [];
         let pointSpacing = this.props.width / (data.length-1);
 
         // TODO: Max of data across all data sets
@@ -27,10 +27,12 @@ class LineChart extends BaseChart {
             let color = dataSet.color || Constants.colors[colorIndex];
             let name = dataSet.name;
 
-            let pathData = ''
+            let pathData = '';
             
             let x = 0;
             let y = 0;
+
+            let graphPoints = [];
 
             dataSet.points.forEach((point, index) => {
                 
@@ -38,6 +40,17 @@ class LineChart extends BaseChart {
                 y = height - (point/maxAmount)*height + strokeWidth/2;
 
                 pathData += x + ',' + y + ' ';
+
+                let node = <circle cx={x} 
+                        cy={y} 
+                        r={3}
+                        fill={color}
+                        onMouseOver={(event) => this._setTooltip(event, name, point)}
+                        onMouseOut={(event) => this._setTooltip(event, '')}
+                        onMouseMove={(event) => this._setTooltip(event, name, point)}
+                    />;
+
+                graphPoints.push(node);
             });
 
             if(this.props.fillArea) {
@@ -59,13 +72,14 @@ class LineChart extends BaseChart {
                 strokeLinejoin='round'
             />;
 
-            lines.push(path);
+            graphs.push(path);
             
+            graphs = graphs.concat(graphPoints);
         });
 
         return (<div className='react-chart'>
                 <svg height={height} width={this.props.width} xmlns="http://www.w3.org/2000/svg">
-                    {lines}
+                    {graphs}
                 </svg>
                 <div className={'react-chart-tooltip ' + (this.state.hovered ? 'visible' : 'hidden')} 
                     style={{top: this.state.mouseY, left: this.state.mouseX }}>

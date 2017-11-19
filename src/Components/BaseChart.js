@@ -26,8 +26,8 @@ class BaseChart extends Component {
         this.setState({
             hovered: name,
             tooltip: name + percentText,
-            mouseX: event.clientX,
-            mouseY: event.clientY
+            mouseX: event.pageX,
+            mouseY: event.pageY
         });
     }
 

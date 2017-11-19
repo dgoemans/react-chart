@@ -1148,8 +1148,8 @@ var BaseChart = function (_Component) {
             this.setState({
                 hovered: name,
                 tooltip: name + percentText,
-                mouseX: event.clientX,
-                mouseY: event.clientY
+                mouseX: event.pageX,
+                mouseY: event.pageY
             });
         }
     }, {
@@ -19400,7 +19400,7 @@ var LineChart = function (_BaseChart) {
             var data = this.props.data;
             var height = this.props.height - strokeWidth;
             var legend = [];
-            var lines = [];
+            var graphs = [];
             var pointSpacing = this.props.width / (data.length - 1);
 
             // TODO: Max of data across all data sets
@@ -19419,12 +19419,31 @@ var LineChart = function (_BaseChart) {
                 var x = 0;
                 var y = 0;
 
+                var graphPoints = [];
+
                 dataSet.points.forEach(function (point, index) {
 
                     x = pointSpacing * index;
                     y = height - point / maxAmount * height + strokeWidth / 2;
 
                     pathData += x + ',' + y + ' ';
+
+                    var node = _react2.default.createElement('circle', { cx: x,
+                        cy: y,
+                        r: 3,
+                        fill: color,
+                        onMouseOver: function onMouseOver(event) {
+                            return _this2._setTooltip(event, name, point);
+                        },
+                        onMouseOut: function onMouseOut(event) {
+                            return _this2._setTooltip(event, '');
+                        },
+                        onMouseMove: function onMouseMove(event) {
+                            return _this2._setTooltip(event, name, point);
+                        }
+                    });
+
+                    graphPoints.push(node);
                 });
 
                 if (_this2.props.fillArea) {
@@ -19446,7 +19465,9 @@ var LineChart = function (_BaseChart) {
                     strokeLinejoin: 'round'
                 });
 
-                lines.push(path);
+                graphs.push(path);
+
+                graphs = graphs.concat(graphPoints);
             });
 
             return _react2.default.createElement(
@@ -19455,7 +19476,7 @@ var LineChart = function (_BaseChart) {
                 _react2.default.createElement(
                     'svg',
                     { height: height, width: this.props.width, xmlns: 'http://www.w3.org/2000/svg' },
-                    lines
+                    graphs
                 ),
                 _react2.default.createElement(
                     'div',
