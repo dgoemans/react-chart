@@ -19428,7 +19428,9 @@ var LineChart = function (_BaseChart) {
 
                     pathData += x + ',' + y + ' ';
 
-                    var node = _react2.default.createElement('circle', { cx: x,
+                    var node = _react2.default.createElement('circle', {
+                        key: dataSet.name + '-' + index,
+                        cx: x,
                         cy: y,
                         r: 3,
                         fill: color,

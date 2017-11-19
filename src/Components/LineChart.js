@@ -41,7 +41,9 @@ class LineChart extends BaseChart {
 
                 pathData += x + ',' + y + ' ';
 
-                let node = <circle cx={x} 
+                let node = <circle 
+                        key={dataSet.name + '-' + index}
+                        cx={x} 
                         cy={y} 
                         r={3}
                         fill={color}
