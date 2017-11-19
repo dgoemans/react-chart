@@ -15,9 +15,10 @@ class LineChart extends BaseChart {
         let height = this.props.height - strokeWidth;
         let legend = [];
         let graphs = [];
-        let pointSpacing = this.props.width / (data.length-1);
 
-        // TODO: Max of data across all data sets
+        let maxPoints = Math.max.apply(Math, data.map(dataSet =>  dataSet.points.length));
+
+        let pointSpacing = this.props.width / (maxPoints-1);
 
         let maxAmount = Math.max.apply(Math, data.map(dataSet =>  Math.max.apply(Math, dataSet.points)));
         

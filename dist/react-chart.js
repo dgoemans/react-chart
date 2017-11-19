@@ -19401,9 +19401,12 @@ var LineChart = function (_BaseChart) {
             var height = this.props.height - strokeWidth;
             var legend = [];
             var graphs = [];
-            var pointSpacing = this.props.width / (data.length - 1);
 
-            // TODO: Max of data across all data sets
+            var maxPoints = Math.max.apply(Math, data.map(function (dataSet) {
+                return dataSet.points.length;
+            }));
+
+            var pointSpacing = this.props.width / (maxPoints - 1);
 
             var maxAmount = Math.max.apply(Math, data.map(function (dataSet) {
                 return Math.max.apply(Math, dataSet.points);
