@@ -19013,7 +19013,7 @@ exports = module.exports = __webpack_require__(6)(undefined);
 
 
 // module
-exports.push([module.i, ".react-chart {\n    font-family: Arial, Helvetica, sans-serif;\n    display: flex;\n    flex-direction: row;\n}\n\n.react-chart-tooltip {\n    pointer-events: none;\n    background-color: rgba(0, 0, 0, 0.8);\n    color: #dddddd;\n    min-width: 120px;\n    padding: 0.5em 0.6em;\n    border-radius: 0.5em;\n    font-size: 0.9em;\n    position: absolute;\n    z-index: 1;\n    transform: translate(-50%, -100%);\n}\n\n.react-chart-tooltip span {\n    margin: auto;\n}\n\n.hidden {\n    visibility: hidden;\n    display: none !important;\n}\n\n.visible { \n    visibility: visible;\n    display: inherit !important;\n}\n\n.react-chart-legend {\n    display: flex;\n    flex-direction: column;\n    padding: 0.5em;\n}\n\n.selected {\n    color: #777777;\n}\n\n.react-chart-legend-row {\n    display: flex;\n    flex-direction: row;\n    padding: 0.3em;\n}\n\n.react-chart-legend-box {\n    width: 1em;\n    height: 1em;\n}\n\n.react-chart-legend-label {\n    margin-left: 1em;\n}\n", ""]);
+exports.push([module.i, ".react-chart {\r\n    font-family: Arial, Helvetica, sans-serif;\r\n    display: flex;\r\n    flex-direction: row;\r\n}\r\n\r\n.react-chart-tooltip {\r\n    pointer-events: none;\r\n    background-color: rgba(0, 0, 0, 0.8);\r\n    color: #dddddd;\r\n    min-width: 120px;\r\n    padding: 0.5em 0.6em;\r\n    border-radius: 0.5em;\r\n    font-size: 0.9em;\r\n    position: absolute;\r\n    z-index: 1;\r\n    transform: translate(-50%, -100%);\r\n}\r\n\r\n.react-chart-tooltip span {\r\n    margin: auto;\r\n}\r\n\r\n.hidden {\r\n    visibility: hidden;\r\n    display: none !important;\r\n}\r\n\r\n.visible { \r\n    visibility: visible;\r\n    display: inherit !important;\r\n}\r\n\r\n.react-chart-legend {\r\n    display: flex;\r\n    flex-direction: column;\r\n    padding: 0.5em;\r\n}\r\n\r\n.selected {\r\n    color: #777777;\r\n}\r\n\r\n.react-chart-legend-row {\r\n    display: flex;\r\n    flex-direction: row;\r\n    padding: 0.3em;\r\n}\r\n\r\n.react-chart-legend-box {\r\n    width: 1em;\r\n    height: 1em;\r\n}\r\n\r\n.react-chart-legend-label {\r\n    margin-left: 1em;\r\n}\r\n", ""]);
 
 // exports
 
@@ -19336,7 +19336,7 @@ exports = module.exports = __webpack_require__(6)(undefined);
 
 
 // module
-exports.push([module.i, ".react-chart-bars {\n    display: flex;\n    align-items: baseline;\n}\n\n.react-chart-bar {\n    width: 40px;\n    margin-right: 30px;\n    float: left;\n    box-sizing: border-box;\n}\n\n.react-chart-bar:hover {\n    border: 2px solid #ccc;\n}", ""]);
+exports.push([module.i, ".react-chart-bars {\r\n    display: flex;\r\n    align-items: baseline;\r\n}\r\n\r\n.react-chart-bar {\r\n    width: 40px;\r\n    margin-right: 30px;\r\n    float: left;\r\n    box-sizing: border-box;\r\n}\r\n\r\n.react-chart-bar:hover {\r\n    border: 2px solid #ccc;\r\n}", ""]);
 
 // exports
 
@@ -19398,7 +19398,7 @@ var LineChart = function (_BaseChart) {
 
             var strokeWidth = 3;
             var data = this.props.data;
-            var height = this.props.height - strokeWidth;
+            var height = this.props.height - strokeWidth * 2;
             var legend = [];
             var graphs = [];
 
@@ -19427,7 +19427,7 @@ var LineChart = function (_BaseChart) {
                 dataSet.points.forEach(function (point, index) {
 
                     x = pointSpacing * index;
-                    y = height - point / maxAmount * height + strokeWidth / 2;
+                    y = height - point / maxAmount * (height - strokeWidth);
 
                     pathData += x + ',' + y + ' ';
 
@@ -19435,7 +19435,7 @@ var LineChart = function (_BaseChart) {
                         key: dataSet.name + '-' + index,
                         cx: x,
                         cy: y,
-                        r: 3,
+                        r: strokeWidth,
                         fill: color,
                         onMouseOver: function onMouseOver(event) {
                             return _this2._setTooltip(event, name, point);
@@ -19452,8 +19452,8 @@ var LineChart = function (_BaseChart) {
                 });
 
                 if (_this2.props.fillArea) {
-                    pathData += x + ',' + height + ' ';
-                    pathData += 0 + ',' + height + ' ';
+                    pathData += x + ',' + _this2.props.height + ' ';
+                    pathData += 0 + ',' + _this2.props.height + ' ';
                 }
 
                 var legendItem = _this2._getLegend(name, color);
@@ -19552,7 +19552,7 @@ exports = module.exports = __webpack_require__(6)(undefined);
 
 
 // module
-exports.push([module.i, "\n.react-chart-line {\n    \n}", ""]);
+exports.push([module.i, "\r\n.react-chart-line {\r\n    \r\n}", ""]);
 
 // exports
 

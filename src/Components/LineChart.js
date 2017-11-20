@@ -12,7 +12,7 @@ class LineChart extends BaseChart {
 
         let strokeWidth = 3;
         let data = this.props.data;
-        let height = this.props.height - strokeWidth;
+        let height = this.props.height - strokeWidth*2;
         let legend = [];
         let graphs = [];
 
@@ -38,7 +38,7 @@ class LineChart extends BaseChart {
             dataSet.points.forEach((point, index) => {
                 
                 x = pointSpacing*index;
-                y = height - (point/maxAmount)*height + strokeWidth/2;
+                y = height - (point/maxAmount)*(height - strokeWidth);
 
                 pathData += x + ',' + y + ' ';
 
@@ -46,7 +46,7 @@ class LineChart extends BaseChart {
                         key={dataSet.name + '-' + index}
                         cx={x} 
                         cy={y} 
-                        r={3}
+                        r={strokeWidth}
                         fill={color}
                         onMouseOver={(event) => this._setTooltip(event, name, point)}
                         onMouseOut={(event) => this._setTooltip(event, '')}
@@ -57,8 +57,8 @@ class LineChart extends BaseChart {
             });
 
             if(this.props.fillArea) {
-                pathData += x + ',' + height + ' ';
-                pathData += 0 + ',' + height + ' ';
+                pathData += x + ',' + this.props.height + ' ';
+                pathData += 0 + ',' + this.props.height + ' ';
             }
 
             let legendItem = this._getLegend(name, color);

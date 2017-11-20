@@ -46,12 +46,12 @@ class App extends React.Component {
                         {name:"Netherlands", points: [65,51,62,75,35]},
                         {name:"South Africa", points: [42,32,54,67,23]},
                         {name:"Belgium", points: [32,46,12,48,23]},
-                        {name:"Maldives", points: [25,12,5,3,37]}
+                        {name:"Maldives", points: [25,12,5,0,37]}
                     ]}
                     legend={true}
                     height={200}
                     width={400}
-                    fillArea={false}
+                    fillArea={true}
                 />
             </div>
         </div>);
