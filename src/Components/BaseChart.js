@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
-import {render} from 'react-dom';
 
-class BaseChart extends Component {
-
+export const BaseChart = class extends Component {
     componentWillMount() {
         this.setState({
             tooltip: '',
@@ -15,14 +13,17 @@ class BaseChart extends Component {
         return amount.toFixed(2);
     }
 
-    _setTooltip(event, name = '', amount = null) {
-        
-        let percentText = '';
+    _clearTooltip(event) {
+        this.setState({
+            hovered: undefined,
+            tooltip: undefined,
+            mouseX: event.pageX,
+            mouseY: event.pageY
+        });
+    }
 
-        if(amount !== null) {
-            percentText = ' (' + this._getAmountString(amount) + ')';
-        }
-
+    _setTooltip(event, name, amount) {
+        const percentText = ' (' + this._getAmountString(amount) + ')';
         this.setState({
             hovered: name,
             tooltip: name + percentText,
@@ -32,12 +33,9 @@ class BaseChart extends Component {
     }
 
     _getLegend(name, color) {
-        
         return (<div key={name} className={'react-chart-legend-row' + ((this.state.hovered === name) ? '  selected' : '') }>
                 <div className='react-chart-legend-box' style={{backgroundColor: color}}></div>
                 <span className='react-chart-legend-label'>{name}</span>
             </div>);
     }
 };
-
-export default BaseChart;

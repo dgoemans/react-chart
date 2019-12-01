@@ -1,38 +1,30 @@
-import React, { Component } from 'react';
-import {render} from 'react-dom';
-import * as Constants from './Constants'
-import BaseChart from './BaseChart'
+import React from 'react';
+import { colors } from './Constants'
+import { BaseChart } from './'
 
 import './Common.css';
 import './BarChart.css';
 
 
-class BarChart extends BaseChart {
+export const BarChart = class extends BaseChart {
 
     render() {
-        let data = this.props.data;
+        const { data, height } = this.props;
 
-        let height = this.props.height;
         let bars = [];
         let legend = [];
         
-        let hoveredBar = null;
-
-        let maxAmount = Math.max.apply(Math, data.map(data => data.amount));
+        const maxAmount = Math.max.apply(Math, data.map(data => data.amount));
 
         data.forEach((dataSet, index) => {
-            let colorIndex = Math.floor( (index/data.length) * Constants.colors.length);
-            let color = dataSet.color || Constants.colors[colorIndex];
+            const colorIndex = Math.floor( (index/data.length) * colors.length);
+            const color = dataSet.color || colors[colorIndex];
 
-            let barHeight = dataSet.amount/maxAmount * height;            
-            let computed = this._getBar(dataSet.name, dataSet.amount, barHeight, color);
+            const barHeight = dataSet.amount/maxAmount * height;            
+            const computed = this._getBar(dataSet.name, dataSet.amount, barHeight, color);
             bars.push(computed);
 
-            if(dataSet.name === this.state.hovered) {
-                hoveredBar = computed;
-            }
-
-            let legendItem = this._getLegend(dataSet.name, color);
+            const legendItem = this._getLegend(dataSet.name, color);
             legend.push(legendItem);
         });
 
@@ -51,12 +43,17 @@ class BarChart extends BaseChart {
     }
 
     _getBar(name, amount, height, color) {
+        const showTooltip = (event) => {
+            this._setTooltip(event, name, amount)
+        }
+        const clearTooltip = (event) => this._clearTooltip(event);
+
         return <div key={name} 
                 style={{backgroundColor: color, height: height}} 
                 className='react-chart-bar'
-                onMouseOver={(event) => this._setTooltip(event, name, amount)}
-                onMouseOut={(event) => this._setTooltip(event, '')}
-                onMouseMove={(event) => this._setTooltip(event, name, amount)}
+                onMouseOver={showTooltip}
+                onMouseOut={clearTooltip}
+                onMouseMove={showTooltip}
             >
             </div>
     }
@@ -65,5 +62,3 @@ class BarChart extends BaseChart {
 BarChart.defaultProps = {
     legend: true,
 }
-
-export default BarChart;

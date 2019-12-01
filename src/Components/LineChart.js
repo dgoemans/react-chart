@@ -1,32 +1,30 @@
-import React, { Component } from 'react';
-import {render} from 'react-dom';
-import * as Constants from './Constants'
-import BaseChart from './BaseChart'
+import React from 'react';
+import { colors } from './Constants'
+import { BaseChart } from './'
 
 import './Common.css';
 import './LineChart.css';
 
 
-class LineChart extends BaseChart {
+export const LineChart = class extends BaseChart {
     render() {
-
-        let strokeWidth = 3;
-        let data = this.props.data;
-        let height = this.props.height - strokeWidth*2;
+        const strokeWidth = 3;
+        const { data } = this.props;
+        const height = this.props.height - strokeWidth*2;
         let legend = [];
         let graphs = [];
 
-        let maxPoints = Math.max.apply(Math, data.map(dataSet =>  dataSet.points.length));
+        const maxPoints = Math.max.apply(Math, data.map(dataSet =>  dataSet.points.length));
 
-        let pointSpacing = this.props.width / (maxPoints-1);
+        const pointSpacing = this.props.width / (maxPoints-1);
 
-        let maxAmount = Math.max.apply(Math, data.map(dataSet =>  Math.max.apply(Math, dataSet.points)));
+        const maxAmount = Math.max.apply(Math, data.map(dataSet =>  Math.max.apply(Math, dataSet.points)));
         
 
         data.forEach((dataSet, index) => {
-            let colorIndex = Math.floor( (index/data.length) * Constants.colors.length);
-            let color = dataSet.color || Constants.colors[colorIndex];
-            let name = dataSet.name;
+            const colorIndex = Math.floor( (index/data.length) * colors.length);
+            const color = dataSet.color || colors[colorIndex];
+            const name = dataSet.name;
 
             let pathData = '';
             
@@ -42,15 +40,21 @@ class LineChart extends BaseChart {
 
                 pathData += x + ',' + y + ' ';
 
+                const showTooltip = (event) => {
+                    this._setTooltip(event, name, point)
+                }
+
+                const clearTooltip = (event) => this._clearTooltip(event);
+
                 let node = <circle 
                         key={dataSet.name + '-' + index}
                         cx={x} 
                         cy={y} 
                         r={strokeWidth}
                         fill={color}
-                        onMouseOver={(event) => this._setTooltip(event, name, point)}
-                        onMouseOut={(event) => this._setTooltip(event, '')}
-                        onMouseMove={(event) => this._setTooltip(event, name, point)}
+                        onMouseOver={showTooltip}
+                        onMouseOut={clearTooltip}
+                        onMouseMove={showTooltip}
                     />;
 
                 graphPoints.push(node);
@@ -61,10 +65,10 @@ class LineChart extends BaseChart {
                 pathData += 0 + ',' + this.props.height + ' ';
             }
 
-            let legendItem = this._getLegend(name, color);
+            const legendItem = this._getLegend(name, color);
             legend.push(legendItem);
 
-            let path = <polyline key={dataSet.name} 
+            const path = <polyline key={dataSet.name} 
                 points={pathData} 
                 className='react-chart-line'
                 stroke={color}
@@ -93,13 +97,9 @@ class LineChart extends BaseChart {
                 </div>
             </div>);
     }
-
-    _
 }
 
 LineChart.defaultProps = {
     legend: true,
     fillArea: false
 }
-
-export default LineChart;

@@ -1,17 +1,13 @@
-import React, { Component } from 'react';
-import {render} from 'react-dom';
-import * as Constants from './Constants'
-import BaseChart from './BaseChart'
+import React from 'react';
+import { colors } from './Constants'
+import { BaseChart } from './'
 
 import './Common.css';
 import './PieChart.css';
 
-class PieChart extends BaseChart {
-
+export const PieChart = class extends BaseChart {
     render() {
-        let data = this.props.data;
-
-        let size = this.props.size;
+        const { data, size } = this.props;
         let arcs = [];
         let legend = [];
         let center = size/2;
@@ -23,9 +19,9 @@ class PieChart extends BaseChart {
         let hoveredArc = null;
 
         data.forEach((dataSet, index) => {
-            let colorIndex = Math.floor( (index/data.length) * Constants.colors.length);
-            let color = dataSet.color || Constants.colors[colorIndex];
-            let computed = this._getArc(dataSet.name, dataSet.amount, startAngle, center, radius, color);
+            const colorIndex = Math.floor( (index/data.length) * colors.length);
+            const color = dataSet.color || colors[colorIndex];
+            const computed = this._getArc(dataSet.name, dataSet.amount, startAngle, center, radius, color);
             arcs.push(computed);
 
             if(dataSet.name === this.state.hovered) {
@@ -39,7 +35,7 @@ class PieChart extends BaseChart {
             legend.push(legendItem);
         });
 
-        arcs.sort((a,b) => {
+        arcs.sort((a,_) => {
             if(a === hoveredArc) {
                 return 1;
             } else {
@@ -66,38 +62,44 @@ class PieChart extends BaseChart {
     }
 
     _getArc(dataSetName, percent, startAngle, center, radius, arcColor) {
-        let strokeWidth = 4;
-        let isHovered = dataSetName === this.state.hovered;
-        let radiusLessStroke = radius - strokeWidth;
-        let angle = percent * Math.PI*2;
-        let x = Math.cos(startAngle)*radiusLessStroke + center;
-        let y = Math.sin(startAngle)*radiusLessStroke + center;
-        let endAngle = startAngle + angle;
-        let x2 = Math.cos(endAngle)*radiusLessStroke + center;
-        let y2 = Math.sin(endAngle)*radiusLessStroke + center;
+        const strokeWidth = 4;
+        const isHovered = dataSetName === this.state.hovered;
+        const radiusLessStroke = radius - strokeWidth;
+        const angle = percent * Math.PI*2;
+        const x = Math.cos(startAngle)*radiusLessStroke + center;
+        const y = Math.sin(startAngle)*radiusLessStroke + center;
+        const endAngle = startAngle + angle;
+        const x2 = Math.cos(endAngle)*radiusLessStroke + center;
+        const y2 = Math.sin(endAngle)*radiusLessStroke + center;
 
         let closing = `L ${center} ${center} Z`;
 
-        let large = (endAngle - startAngle) > Math.PI;
+        const large = (endAngle - startAngle) > Math.PI;
 
         if(this.props.donut) {
-            let innerRadius = radiusLessStroke*this.props.donutThickness;
-            let xInner = Math.cos(startAngle)*innerRadius + center;
-            let yInner = Math.sin(startAngle)*innerRadius + center;
-            let x2Inner = Math.cos(endAngle)*innerRadius + center;
-            let y2Inner = Math.sin(endAngle)*innerRadius + center;
+            const innerRadius = radiusLessStroke*this.props.donutThickness;
+            const xInner = Math.cos(startAngle)*innerRadius + center;
+            const yInner = Math.sin(startAngle)*innerRadius + center;
+            const x2Inner = Math.cos(endAngle)*innerRadius + center;
+            const y2Inner = Math.sin(endAngle)*innerRadius + center;
 
             closing = `L ${x2Inner} ${y2Inner}
                 A ${innerRadius} ${innerRadius}, 0, ${large?1:0}, 0, ${xInner} ${yInner} Z`;
         }
+
+        const showTooltip = (event) => {
+            this._setTooltip(event, dataSetName, percent)
+        }
+
+        const clearTooltip = (event) => this._clearTooltip(event);
         
         return (<path key={dataSetName} d={`M ${x} ${y}
                 A ${radiusLessStroke} ${radiusLessStroke}, 0, ${large?1:0}, 1, ${x2} ${y2}
                 ${closing}`}
                 fill={arcColor}
-                onMouseOver={(event) => this._setTooltip(event, dataSetName, percent)}
-                onMouseOut={(event) => this._setTooltip(event, '')}
-                onMouseMove={(event) => this._setTooltip(event, dataSetName, percent)}
+                onMouseOver={showTooltip}
+                onMouseOut={clearTooltip}
+                onMouseMove={showTooltip}
                 className='react-chart-segment'
                 stroke={isHovered ? this.props.hoverColor : this.props.strokeColor}
                 strokeWidth={strokeWidth}
@@ -113,5 +115,3 @@ PieChart.defaultProps = {
     donut: true,
     donutThickness: 0.6
 }
-
-export default PieChart;
