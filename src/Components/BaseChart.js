@@ -13,14 +13,17 @@ export const BaseChart = class extends Component {
         return amount.toFixed(2);
     }
 
-    _setTooltip(event, name = '', amount = null) {
-        
-        let percentText = '';
+    _clearTooltip(event) {
+        this.setState({
+            hovered: undefined,
+            tooltip: undefined,
+            mouseX: event.pageX,
+            mouseY: event.pageY
+        });
+    }
 
-        if(amount !== null) {
-            percentText = ' (' + this._getAmountString(amount) + ')';
-        }
-
+    _setTooltip(event, name, amount) {
+        const percentText = ' (' + this._getAmountString(amount) + ')';
         this.setState({
             hovered: name,
             tooltip: name + percentText,
