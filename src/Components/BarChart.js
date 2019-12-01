@@ -1,13 +1,12 @@
-import React, { Component } from 'react';
-import {render} from 'react-dom';
-import * as Constants from './Constants'
-import BaseChart from './BaseChart'
+import React from 'react';
+import { colors } from './Constants'
+import { BaseChart } from './'
 
 import './Common.css';
 import './BarChart.css';
 
 
-class BarChart extends BaseChart {
+export const BarChart = class extends BaseChart {
 
     render() {
         let data = this.props.data;
@@ -21,8 +20,8 @@ class BarChart extends BaseChart {
         let maxAmount = Math.max.apply(Math, data.map(data => data.amount));
 
         data.forEach((dataSet, index) => {
-            let colorIndex = Math.floor( (index/data.length) * Constants.colors.length);
-            let color = dataSet.color || Constants.colors[colorIndex];
+            let colorIndex = Math.floor( (index/data.length) * colors.length);
+            let color = dataSet.color || colors[colorIndex];
 
             let barHeight = dataSet.amount/maxAmount * height;            
             let computed = this._getBar(dataSet.name, dataSet.amount, barHeight, color);
@@ -65,5 +64,3 @@ class BarChart extends BaseChart {
 BarChart.defaultProps = {
     legend: true,
 }
-
-export default BarChart;

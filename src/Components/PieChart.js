@@ -1,13 +1,11 @@
-import React, { Component } from 'react';
-import {render} from 'react-dom';
-import * as Constants from './Constants'
-import BaseChart from './BaseChart'
+import React from 'react';
+import { colors } from './Constants'
+import { BaseChart } from './'
 
 import './Common.css';
 import './PieChart.css';
 
-class PieChart extends BaseChart {
-
+export const PieChart = class extends BaseChart {
     render() {
         let data = this.props.data;
 
@@ -23,8 +21,8 @@ class PieChart extends BaseChart {
         let hoveredArc = null;
 
         data.forEach((dataSet, index) => {
-            let colorIndex = Math.floor( (index/data.length) * Constants.colors.length);
-            let color = dataSet.color || Constants.colors[colorIndex];
+            let colorIndex = Math.floor( (index/data.length) * colors.length);
+            let color = dataSet.color || colors[colorIndex];
             let computed = this._getArc(dataSet.name, dataSet.amount, startAngle, center, radius, color);
             arcs.push(computed);
 
@@ -113,5 +111,3 @@ PieChart.defaultProps = {
     donut: true,
     donutThickness: 0.6
 }
-
-export default PieChart;

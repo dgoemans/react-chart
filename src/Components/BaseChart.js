@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
-import {render} from 'react-dom';
 
-class BaseChart extends Component {
-
+export const BaseChart = class extends Component {
     componentWillMount() {
         this.setState({
             tooltip: '',
@@ -32,12 +30,9 @@ class BaseChart extends Component {
     }
 
     _getLegend(name, color) {
-        
         return (<div key={name} className={'react-chart-legend-row' + ((this.state.hovered === name) ? '  selected' : '') }>
                 <div className='react-chart-legend-box' style={{backgroundColor: color}}></div>
                 <span className='react-chart-legend-label'>{name}</span>
             </div>);
     }
 };
-
-export default BaseChart;

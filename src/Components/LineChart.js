@@ -1,13 +1,12 @@
-import React, { Component } from 'react';
-import {render} from 'react-dom';
-import * as Constants from './Constants'
-import BaseChart from './BaseChart'
+import React from 'react';
+import { colors } from './Constants'
+import { BaseChart } from './'
 
 import './Common.css';
 import './LineChart.css';
 
 
-class LineChart extends BaseChart {
+export const LineChart = class extends BaseChart {
     render() {
 
         let strokeWidth = 3;
@@ -24,8 +23,8 @@ class LineChart extends BaseChart {
         
 
         data.forEach((dataSet, index) => {
-            let colorIndex = Math.floor( (index/data.length) * Constants.colors.length);
-            let color = dataSet.color || Constants.colors[colorIndex];
+            let colorIndex = Math.floor( (index/data.length) * colors.length);
+            let color = dataSet.color || colors[colorIndex];
             let name = dataSet.name;
 
             let pathData = '';
@@ -93,13 +92,9 @@ class LineChart extends BaseChart {
                 </div>
             </div>);
     }
-
-    _
 }
 
 LineChart.defaultProps = {
     legend: true,
     fillArea: false
 }
-
-export default LineChart;
