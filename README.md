@@ -1,7 +1,8 @@
 # react-chart
 A simple React chart library
 
-![](https://github.com/dgoemans/react-chart/workflows/Node%20CI/badge.svg)
+![](https://github.com/dgoemans/react-chart/workflows/Build/badge.svg)
+![](https://github.com/dgoemans/react-chart/workflows/Release/badge.svg)
 
 ## Contents:
 Supports the following chart(s):

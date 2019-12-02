@@ -1,6 +1,6 @@
-name: Node CI
+name: Build
 
-on: [push]
+on: [push, pull_request]
 
 jobs:
   build:
@@ -23,3 +23,5 @@ jobs:
         npm run prod
       env:
         CI: true
+
+
