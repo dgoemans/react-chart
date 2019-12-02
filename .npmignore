@@ -1,0 +1,6 @@
+.github/
+examples/
+src/
+.babelrc
+webpack.config.js
+webpack.examples.config.js
