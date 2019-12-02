@@ -5,22 +5,6 @@ on:
     branches: 
       - master
 
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v1
-      - name: Use Node.js 12
-        uses: actions/setup-node@v1
-        with:
-          node-version: 12
-      - name: npm install, build
-        run: |
-          npm ci
-          npm run prod
-        env:
-          CI: true
-
   publish-npm:
     needs: build
     runs-on: ubuntu-latest
@@ -32,6 +16,7 @@ jobs:
           node-version: 12
           registry-url: https://registry.npmjs.org/
       - run: npm ci
+      - run: npm run prod
       - run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
