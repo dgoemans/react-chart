@@ -1,6 +1,6 @@
 {
   "name": "react-chart-lib",
-  "version": "0.2.4",
+  "version": "0.2.5",
   "description": "A simple charting component for React",
   "main": "dist/react-chart.js",
   "readme": "README.md",
